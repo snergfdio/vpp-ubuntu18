@@ -118,6 +118,8 @@ RUN apt-get -q update && \
         libapr1-dev \
         libasprintf-dev \
         libbison-dev \
+        libconfuse-doc \
+        libconfuse-dev \
         libcroco3 \
         libexpat1-dev \
         libganglia1 \
@@ -127,6 +129,10 @@ RUN apt-get -q update && \
         libgettextpo0 \
         libltdl-dev \
         libmail-sendmail-perl \
+        libmbedcrypto1 \
+        libmbedtls-dev \
+        libmbedtls10 \
+        libmbedx509-0 \
         libpython-dev \
         libpython2.7-dev \
         libsctp-dev \
