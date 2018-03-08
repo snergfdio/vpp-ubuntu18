@@ -118,9 +118,6 @@ RUN apt-get -q update && \
         libapr1-dev \
         libasprintf-dev \
         libbison-dev \
-        libconfuse-common \
-        libconfuse-dev \
-        libconfuse0 \
         libcroco3 \
         libexpat1-dev \
         libganglia1 \
