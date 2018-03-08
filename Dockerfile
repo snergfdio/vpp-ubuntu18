@@ -2,7 +2,7 @@ FROM ubuntu:18.04
 MAINTAINER Ed Kern <ejk@cisco.com>
 LABEL Description="VPP ubuntu 18 baseline" 
 LABEL Vendor="cisco.com" 
-LABEL Version="1.0"
+LABEL Version="1.1"
 
 
 # Setup the environment
