@@ -129,10 +129,7 @@ RUN apt-get -q update && \
         libgettextpo0 \
         libltdl-dev \
         libmail-sendmail-perl \
-        libmbedcrypto1 \
         libmbedtls-dev \
-        libmbedtls10 \
-        libmbedx509-0 \
         libpython-dev \
         libpython2.7-dev \
         libsctp-dev \
