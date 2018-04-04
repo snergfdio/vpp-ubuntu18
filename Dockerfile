@@ -9,6 +9,9 @@ LABEL Version="1.1"
 ENV DEBIAN_FRONTEND=noninteractive
 ENV MAKE_PARALLEL_FLAGS -j 4
 ENV DOCKER_TEST=True
+ENV VPP_ZOMBIE_NOCHECK=1
+ENV DPDK_DOWNLOAD_DIR=/w/Downloads
+ENV VPP_PYTHON_PREFIX=/var/cache/vpp/python
 
 RUN apt-get -q update && \
     apt-get install -y -qq \
@@ -196,7 +199,13 @@ RUN pip install six scapy==2.3.3 pyexpect subprocess32 cffi git+https://github.c
 #Below are requirements for csit
 RUN pip install robotframework==2.9.2 paramiko==1.16.0 scp==0.10.2 ipaddress==1.0.16 interruptingcow==0.6 PyYAML==3.11 pykwalify==1.5.0 \
         enum34==1.1.2 requests==2.9.1 ecdsa==0.13 pycrypto==2.6.1 pypcap==1.1.5
-
+RUN mkdir -p /var/cache/vpp/python
+RUN mkdir -p /w/Downloads
+RUN wget -O /w/Downloads/nasm-2.13.01.tar.xz http://www.nasm.us/pub/nasm/releasebuilds/2.13.01/nasm-2.13.01.tar.xz
+RUN wget -O /w/Downloads/dpdk-18.02.tar.xz http://fast.dpdk.org/rel/dpdk-18.02.tar.xz
+RUN wget -O /w/Downloads/dpdk-17.11.tar.xz http://fast.dpdk.org/rel/dpdk-17.11.tar.xz
+RUN wget -O /w/Downloads/v0.47.tar.gz http://github.com/01org/intel-ipsec-mb/archive/v0.47.tar.gz
+RUN wget -O /w/Downloads/v0.48.tar.gz http://github.com/01org/intel-ipsec-mb/archive/v0.48.tar.gz
 #RUN git clone https://gerrit.fd.io/r/vpp /workspace/ubuntu16 && cd /workspace/ubuntu16; make UNATTENDED=yes install-dep && rm -rf /workspace/ubuntu16 && rm -rf /var/lib/apt/lists/*
 
 
