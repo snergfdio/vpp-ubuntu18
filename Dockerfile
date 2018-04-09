@@ -166,6 +166,7 @@ RUN apt-get -q update && \
         libpcap-dev \
         python-ply \
         iperf3 \
+        libibverbs-dev \
         && rm -rf /var/lib/apt/lists/*
 
 # For the docs
