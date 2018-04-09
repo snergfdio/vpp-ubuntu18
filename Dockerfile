@@ -75,7 +75,6 @@ RUN apt-get -q update && \
         vim \
         wget \
         apt-transport-https \
-        default-jre-headless \
         chrpath \
         nasm \
         && rm -rf /var/lib/apt/lists/*
@@ -157,7 +156,6 @@ RUN apt-get -q update && \
         libboost-all-dev \
         ruby-dev \
         zile \
-        default-jdk-headless \
         check \
         libsubunit-dev \
         libsubunit0 \
