@@ -196,7 +196,7 @@ ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
 RUN curl -L https://packagecloud.io/fdio/master/gpgkey |sudo apt-key add -
 ADD files/99fd.io.list /etc/apt/sources.list.d/99fd.io.list
-ADD files/98fd.io.list /etc/apt/sources.list.d/98fd.io.list
+#ADD files/98fd.io.list /etc/apt/sources.list.d/98fd.io.list
 
 #RUN apt update && apt install -y vpp-dpdk-dev vpp-dpdk-dkms || true
 #RUN mkdir -p /w/dpdk && cd /w/dpdk; apt-get download vpp-dpdk-dkms || true
