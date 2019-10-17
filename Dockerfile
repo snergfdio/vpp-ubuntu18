@@ -64,6 +64,7 @@ RUN apt-get -q update && \
         socat \
         software-properties-common \
         ssh \
+        sshpass \
         sudo \
         sysstat \
         tar \
@@ -93,6 +94,7 @@ RUN apt-get -q update && \
         make \
         wget \
         openjdk-8-jdk \
+        openjdk-11-jdk \
         jq \
         libffi-dev \
 	    python-all \
@@ -166,6 +168,8 @@ RUN apt-get -q update && \
         iperf3 \
         libibverbs-dev \
         apt-utils \
+        python3-all \
+        python3-ply \
         && rm -rf /var/lib/apt/lists/*
 
 # For the docs
@@ -176,6 +180,22 @@ RUN apt-get -q update && \
         python-pyparsing \
         doxygen \
         graphviz \
+        && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get -q update && \
+    apt-get install -y -qq \
+        cmake \
+        cmake-data \
+        libarchive13 \
+        liblzo2-2 \
+        librhash0 \
+        libuv1 \
+        ninja-build \
+        cmake-doc \
+        lrzip \
+        xmlstarlet \
+        g++-8 \
+        gcc-8 \
         && rm -rf /var/lib/apt/lists/*
 
 # Configure locales
@@ -192,10 +212,10 @@ ENV CCACHE_DIR=/var/ccache
 ENV CCACHE_READONLY=true
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
-
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 700 --slave /usr/bin/g++ g++ /usr/bin/g++-7 && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 800 --slave /usr/bin/g++ g++ /usr/bin/g++-8
 
 RUN curl -L https://packagecloud.io/fdio/master/gpgkey |sudo apt-key add -
-ADD files/99fd.io.list /etc/apt/sources.list.d/99fd.io.list
+#ADD files/99fd.io.list /etc/apt/sources.list.d/99fd.io.list
 #ADD files/fdio_master.list /etc/apt/sources.list.d/fdio_master.list
 
 #RUN apt update && apt install -y vpp-dpdk-dev vpp-dpdk-dkms || true
@@ -210,16 +230,41 @@ ADD files/default-jre-headless_1.8-59ubuntu2_amd64.deb /tmp/default-jre-headless
 
 RUN apt-get install -y /tmp/default-jre-headless_1.8-59ubuntu2_amd64.deb /tmp/default-jdk-headless_1.8-59ubuntu2_amd64.deb
 ADD files/jre /etc/apt/preferences.d/jre
-
+ADD files/pc_push /usr/local/bin/pc_push
+ADD files/packagecloud /root/.packagecloud
+ADD files/packagecloud_api /root/packagecloud_api
+ADD files/lf-update-java-alternatives /usr/local/bin/lf-update-java-alternatives
+RUN chmod 755 /usr/local/bin/lf-update-java-alternatives
 RUN gem install rake
 RUN gem install package_cloud
 RUN pip install six scapy==2.3.3 pyexpect subprocess32 cffi git+https://github.com/klement/py-lispnetworking@setup pycodestyle
-#Below are requirements for csit
-RUN pip install robotframework==2.9.2 paramiko==1.16.0 scp==0.10.2 ipaddress==1.0.16 interruptingcow==0.6 PyYAML==3.11 pykwalify==1.5.0 \
-        enum34==1.1.2 requests==2.9.1 ecdsa==0.13 pycrypto==2.6.1 pypcap==1.1.5 psutil
+# CSIT PIP pre-cache
+RUN pip install \
+        aenum==2.1.2 \
+        docopt==0.6.2 \
+        ecdsa==0.13 \
+        enum34==1.1.2 \
+        ipaddress==1.0.16 \
+        paramiko==1.16.0 \
+        pexpect==4.6.0 \
+        pycrypto==2.6.1 \
+        pykwalify==1.5.0 \
+        pypcap==1.1.5 \
+        python-dateutil==2.4.2 \
+        PyYAML==3.11 \
+        requests==2.9.1 \
+        robotframework==2.9.2 \
+        scapy==2.3.1 \
+        scp==0.10.2 \
+        six==1.12.0 \
+        dill==0.2.8.2 \
+        numpy==1.14.5 \
+	psutil
+# ARM workaround
+RUN pip install scipy==1.1.0
 RUN mkdir -p /var/cache/vpp/python
 RUN mkdir -p /w/Downloads
-RUN wget -O /w/Downloads/nasm-2.13.01.tar.xz http://www.nasm.us/pub/nasm/releasebuilds/2.13.01/nasm-2.13.01.tar.xz
+#RUN wget -O /w/Downloads/nasm-2.13.01.tar.xz http://www.nasm.us/pub/nasm/releasebuilds/2.13.01/nasm-2.13.01.tar.xz
 #RUN wget -O /w/Downloads/dpdk-18.02.tar.xz http://fast.dpdk.org/rel/dpdk-18.02.tar.xz
 #RUN wget -O /w/Downloads/dpdk-17.11.tar.xz http://fast.dpdk.org/rel/dpdk-17.11.tar.xz
 RUN wget -O /w/Downloads/dpdk-18.02.1.tar.xz http://dpdk.org/browse/dpdk-stable/snapshot/dpdk-stable-18.02.1.tar.xz
@@ -228,9 +273,6 @@ RUN wget -O /w/Downloads/dpdk-18.08.tar.xz http://dpdk.org/browse/dpdk/snapshot/
 RUN wget -O /w/Downloads/v0.47.tar.gz http://github.com/01org/intel-ipsec-mb/archive/v0.47.tar.gz
 RUN wget -O /w/Downloads/v0.48.tar.gz http://github.com/01org/intel-ipsec-mb/archive/v0.48.tar.gz
 RUN wget -O /w/Downloads/v0.49.tar.gz http://github.com/01org/intel-ipsec-mb/archive/v0.49.tar.gz
+RUN curl -s https://packagecloud.io/install/repositories/fdio/master/script.deb.sh | sudo bash
 
 #RUN git clone https://gerrit.fd.io/r/vpp /workspace/ubuntu16 && cd /workspace/ubuntu16; make UNATTENDED=yes install-dep && rm -rf /workspace/ubuntu16 && rm -rf /var/lib/apt/lists/*
-
-
-
-
