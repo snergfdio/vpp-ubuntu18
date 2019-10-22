@@ -276,5 +276,6 @@ RUN wget -O /w/Downloads/v0.49.tar.gz http://github.com/01org/intel-ipsec-mb/arc
 RUN curl -s https://packagecloud.io/install/repositories/fdio/master/script.deb.sh | sudo bash
 
 # for lftools
+RUN rm -rf /home/jenkins && useradd -ms /bin/bash jenkins && chown -R jenkins /w && chown -R jenkins /var/ccache && chown -R jenkins /var/cache/vpp && mv /usr/bin/sar /usr/bin/sar.old && ln -s /bin/true /usr/bin/sar
 ENV PATH=/root/.local/bin:/home/jenkins/.local/bin:${PATH}
 
