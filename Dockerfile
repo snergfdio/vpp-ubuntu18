@@ -275,6 +275,11 @@ RUN wget -O /w/Downloads/v0.48.tar.gz http://github.com/01org/intel-ipsec-mb/arc
 RUN wget -O /w/Downloads/v0.49.tar.gz http://github.com/01org/intel-ipsec-mb/archive/v0.49.tar.gz
 RUN curl -s https://packagecloud.io/install/repositories/fdio/master/script.deb.sh | sudo bash
 
+#bad and open ssh keys for csit
+ADD files/sshconfig /root/.ssh/config
+ADD files/badkey /root/.ssh/id_rsa
+RUN chmod 600 /root/.ssh/id_rsa
+
 # for lftools
 RUN rm -rf /home/jenkins && useradd -ms /bin/bash jenkins && chown -R jenkins /w && chown -R jenkins /var/ccache && chown -R jenkins /var/cache/vpp && mv /usr/bin/sar /usr/bin/sar.old && ln -s /bin/true /usr/bin/sar
 ENV PATH=/root/.local/bin:/home/jenkins/.local/bin:${PATH}
