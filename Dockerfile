@@ -23,7 +23,7 @@ RUN apt-get -q update && \
         cloud-init \
         cron \
         curl \
-	    libcurl3-gnutls \
+	libcurl3-gnutls \
         dbus \
         dstat \
         ethstatus \
@@ -54,9 +54,6 @@ RUN apt-get -q update && \
         ntp \
         ntpdate \
         open-iscsi \
-        python-apt \
-        python-pip \
-        python-yaml \
         rsync \
         rsyslog \
         screen \
@@ -97,7 +94,6 @@ RUN apt-get -q update && \
         openjdk-11-jdk \
         jq \
         libffi-dev \
-	    python-all \
         && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get -q update && \
@@ -146,9 +142,6 @@ RUN apt-get -q update && \
         m4 \
         pkg-config \
         po-debconf \
-        python-dev \
-        python-virtualenv \
-        python2.7-dev \
         uuid-dev \
         zlib1g-dev \
         locales \
@@ -164,12 +157,29 @@ RUN apt-get -q update && \
         emacs \
         gdb \
         libpcap-dev \
-        python-ply \
         iperf3 \
         libibverbs-dev \
         apt-utils \
+        python-all \
+        python-apt \
+        python-cffi \
+        python-cffi-backend \
+        python-dev \
+        python-enum34 \
+        python-pip \
+        python-ply \
+        python-setuptools \
+        python-virtualenv \
+        python-yaml \
         python3-all \
+        python3-apt \
+        python3-cffi \
+        python3-cffi-backend \
+        python3-dev \
+        python3-pip \
         python3-ply \
+        python3-setuptools \
+        python3-virtualenv \
         && rm -rf /var/lib/apt/lists/*
 
 # For the docs
