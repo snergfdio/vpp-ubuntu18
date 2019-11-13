@@ -206,6 +206,7 @@ RUN apt-get -q update && \
         xmlstarlet \
         g++-8 \
         gcc-8 \
+        yamllint \
         && rm -rf /var/lib/apt/lists/*
 
 # Configure locales
