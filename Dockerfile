@@ -180,6 +180,7 @@ RUN apt-get -q update && \
         python3-ply \
         python3-setuptools \
         python3-virtualenv \
+        python3-venv \
         && rm -rf /var/lib/apt/lists/*
 
 # For the docs
