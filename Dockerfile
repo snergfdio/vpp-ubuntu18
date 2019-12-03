@@ -249,10 +249,19 @@ ADD files/lf-update-java-alternatives /usr/local/bin/lf-update-java-alternatives
 RUN chmod 755 /usr/local/bin/lf-update-java-alternatives
 RUN gem install rake
 RUN gem install package_cloud
-RUN pip install six scapy==2.3.3 pyexpect subprocess32 cffi git+https://github.com/klement/py-lispnetworking@setup pycodestyle
-# CSIT PIP pre-cache
-# CSIT PIP pre-cache
+
+# VPP PIP pre-cahce
 RUN pip install \
+        six \
+	scapy==2.3.3 \
+	pyexpect \
+	subprocess32 \
+	cffi \
+	git+https://github.com/klement/py-lispnetworking@setup \
+	pycodestyle
+
+# CSIT PIP pre-cache
+RUN pip3 install \
         ecdsa==0.13.3 \
         paramiko==2.6.0 \
         pycrypto==2.6.1 \
@@ -288,6 +297,7 @@ RUN pip install \
         MarkupSafe==1.1.1 \
         packaging==19.2 \
         pbr==5.4.3 \
+	ply==3.11 \
         pycparser==2.19 \
         Pygments==2.4.2 \
         PyNaCl==1.3.0 \
@@ -304,8 +314,10 @@ RUN pip install \
         sphinxcontrib-qthelp==1.0.2 \
         sphinxcontrib-serializinghtml==1.1.3 \
         urllib3==1.25.6
-# ARM workaround
-RUN pip install scipy==1.1.0
+
+# CSIT PIP pre-cache - ARM workaround
+RUN pip3 install scipy==1.1.0
+
 RUN mkdir -p /var/cache/vpp/python
 RUN mkdir -p /w/Downloads
 #RUN wget -O /w/Downloads/nasm-2.13.01.tar.xz http://www.nasm.us/pub/nasm/releasebuilds/2.13.01/nasm-2.13.01.tar.xz
