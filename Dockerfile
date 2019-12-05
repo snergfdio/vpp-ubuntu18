@@ -249,31 +249,75 @@ ADD files/lf-update-java-alternatives /usr/local/bin/lf-update-java-alternatives
 RUN chmod 755 /usr/local/bin/lf-update-java-alternatives
 RUN gem install rake
 RUN gem install package_cloud
-RUN pip install six scapy==2.3.3 pyexpect subprocess32 cffi git+https://github.com/klement/py-lispnetworking@setup pycodestyle
-# CSIT PIP pre-cache
+
+# VPP PIP pre-cahce
 RUN pip install \
-        aenum==2.1.2 \
-        docopt==0.6.2 \
-        ecdsa==0.13 \
-        enum34==1.1.2 \
-        ipaddress==1.0.16 \
-        paramiko==1.16.0 \
-        pexpect==4.6.0 \
+        six \
+	scapy==2.3.3 \
+	pyexpect \
+	subprocess32 \
+	cffi \
+	git+https://github.com/klement/py-lispnetworking@setup \
+	pycodestyle
+
+# CSIT PIP pre-cache
+RUN pip3 install \
+        ecdsa==0.13.3 \
+        paramiko==2.6.0 \
         pycrypto==2.6.1 \
-        pykwalify==1.5.0 \
-        pypcap==1.1.5 \
-        python-dateutil==2.4.2 \
-        PyYAML==3.11 \
-        requests==2.9.1 \
-        robotframework==2.9.2 \
-        scapy==2.3.1 \
-        scp==0.10.2 \
-        six==1.12.0 \
+        pypcap==1.2.3 \
+        PyYAML==5.1.1 \
+        requests==2.22.0 \
+        robotframework==3.1.2 \
+        scapy==2.4.3 \
+        scp==0.13.2 \
+        ansible==2.7.8 \
         dill==0.2.8.2 \
-        numpy==1.14.5 \
-	psutil
-# ARM workaround
-RUN pip install scipy==1.1.0
+        numpy==1.17.3 \
+        hdrhistogram==0.6.1 \
+        pandas==0.25.3 \
+        plotly==4.1.1 \
+        PTable==0.9.2 \
+        Sphinx==2.2.1 \
+        sphinx-rtd-theme==0.4.0 \
+        sphinxcontrib-programoutput==0.15 \
+        sphinxcontrib-robotdoc==0.11.0 \
+        alabaster==0.7.12 \
+        Babel==2.7.0 \
+        bcrypt==3.1.7 \
+        certifi==2019.9.11 \
+        cffi==1.13.2 \
+        chardet==3.0.4 \
+        cryptography==2.8 \
+        docutils==0.15.2 \
+        future==0.18.2 \
+        idna==2.8 \
+        imagesize==1.1.0 \
+        Jinja2==2.10.3 \
+        MarkupSafe==1.1.1 \
+        packaging==19.2 \
+        pbr==5.4.3 \
+	ply==3.11 \
+        pycparser==2.19 \
+        Pygments==2.4.2 \
+        PyNaCl==1.3.0 \
+        pyparsing==2.4.4 \
+        python-dateutil==2.8.1 \
+        pytz==2019.3 \
+        retrying==1.3.3 \
+        six==1.13.0 \
+        snowballstemmer==2.0.0 \
+        sphinxcontrib-applehelp==1.0.1 \
+        sphinxcontrib-devhelp==1.0.1 \
+        sphinxcontrib-htmlhelp==1.0.2 \
+        sphinxcontrib-jsmath==1.0.1 \
+        sphinxcontrib-qthelp==1.0.2 \
+        sphinxcontrib-serializinghtml==1.1.3 \
+        urllib3==1.25.6
+
+# CSIT PIP pre-cache - ARM workaround
+RUN pip3 install scipy==1.1.0
+
 RUN mkdir -p /var/cache/vpp/python
 RUN mkdir -p /w/Downloads
 #RUN wget -O /w/Downloads/nasm-2.13.01.tar.xz http://www.nasm.us/pub/nasm/releasebuilds/2.13.01/nasm-2.13.01.tar.xz
